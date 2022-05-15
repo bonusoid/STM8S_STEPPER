@@ -1,0 +1,977 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ANSI-C Compiler
+                                      3 ; Version 3.5.0 #9253 (Apr  3 2018) (Linux)
+                                      4 ; This file was generated Sun May 15 22:26:54 2022
+                                      5 ;--------------------------------------------------------
+                                      6 	.module main
+                                      7 	.optsdcc -mstm8
+                                      8 	
+                                      9 ;--------------------------------------------------------
+                                     10 ; Public variables in this module
+                                     11 ;--------------------------------------------------------
+                                     12 	.globl _main
+                                     13 	.globl _stepccw
+                                     14 	.globl _stepcw
+                                     15 	.globl _readreg
+                                     16 	.globl _delay_init
+                                     17 	.globl _delay_us
+                                     18 	.globl _delay_ms
+                                     19 	.globl _delay_timer
+                                     20 	.globl _clock_init
+                                     21 	.globl _i2c_init
+                                     22 	.globl _i2c_set_start
+                                     23 	.globl _i2c_set_address
+                                     24 	.globl _i2c_set_stop
+                                     25 	.globl _i2c_clear_ack
+                                     26 	.globl _i2c_set_ack
+                                     27 	.globl _i2c_ack_pos_current
+                                     28 	.globl _i2c_ack_pos_next
+                                     29 	.globl _i2c_poll_SB
+                                     30 	.globl _i2c_poll_ADDR
+                                     31 	.globl _i2c_poll_BTF
+                                     32 	.globl _i2c_poll_TXE
+                                     33 	.globl _i2c_poll_RXNE
+                                     34 	.globl _i2c_clear_bits
+                                     35 	.globl _i2c_clear_ADDR
+                                     36 	.globl _i2c_enable_interrupts
+                                     37 	.globl _i2c_disable_interrupts
+                                     38 	.globl _adc_init
+                                     39 	.globl _read_adc
+                                     40 	.globl _uart1_init
+                                     41 	.globl _uart1_send
+                                     42 	.globl _uart1_recv
+                                     43 	.globl _uart1_recv_i
+                                     44 	.globl _pwm1_init
+                                     45 	.globl _pwm2_init
+                                     46 	.globl _pwm1ch1_enable
+                                     47 	.globl _pwm1ch1_disable
+                                     48 	.globl _pwm2ch1_enable
+                                     49 	.globl _pwm2ch1_disable
+                                     50 	.globl _pwm1_update
+                                     51 	.globl _pwm2_update
+                                     52 	.globl _loop
+                                     53 	.globl _gpio_init
+                                     54 	.globl _setstep
+                                     55 ;--------------------------------------------------------
+                                     56 ; ram data
+                                     57 ;--------------------------------------------------------
+                                     58 	.area DATA
+      000000                         59 _readreg::
+      000000                         60 	.ds 1
+                                     61 ;--------------------------------------------------------
+                                     62 ; ram data
+                                     63 ;--------------------------------------------------------
+                                     64 	.area INITIALIZED
+      000000                         65 _stepcw::
+      000000                         66 	.ds 4
+      000004                         67 _stepccw::
+      000004                         68 	.ds 4
+                                     69 ;--------------------------------------------------------
+                                     70 ; Stack segment in internal ram 
+                                     71 ;--------------------------------------------------------
+                                     72 	.area	SSEG
+      000000                         73 __start__stack:
+      000000                         74 	.ds	1
+                                     75 
+                                     76 ;--------------------------------------------------------
+                                     77 ; absolute external ram data
+                                     78 ;--------------------------------------------------------
+                                     79 	.area DABS (ABS)
+                                     80 ;--------------------------------------------------------
+                                     81 ; interrupt vector 
+                                     82 ;--------------------------------------------------------
+                                     83 	.area HOME
+      000000                         84 __interrupt_vect:
+      000000 82v00u00u00             85 	int s_GSINIT ;reset
+      000004 82 00 00 00             86 	int 0x0000 ;trap
+      000008 82 00 00 00             87 	int 0x0000 ;int0
+      00000C 82 00 00 00             88 	int 0x0000 ;int1
+      000010 82 00 00 00             89 	int 0x0000 ;int2
+      000014 82 00 00 00             90 	int 0x0000 ;int3
+      000018 82 00 00 00             91 	int 0x0000 ;int4
+      00001C 82 00 00 00             92 	int 0x0000 ;int5
+      000020 82 00 00 00             93 	int 0x0000 ;int6
+      000024 82 00 00 00             94 	int 0x0000 ;int7
+      000028 82 00 00 00             95 	int 0x0000 ;int8
+      00002C 82 00 00 00             96 	int 0x0000 ;int9
+      000030 82 00 00 00             97 	int 0x0000 ;int10
+      000034 82 00 00 00             98 	int 0x0000 ;int11
+      000038 82 00 00 00             99 	int 0x0000 ;int12
+      00003C 82 00 00 00            100 	int 0x0000 ;int13
+      000040 82 00 00 00            101 	int 0x0000 ;int14
+      000044 82 00 00 00            102 	int 0x0000 ;int15
+      000048 82 00 00 00            103 	int 0x0000 ;int16
+      00004C 82 00 00 00            104 	int 0x0000 ;int17
+      000050 82 00 00 00            105 	int 0x0000 ;int18
+      000054 82 00 00 00            106 	int 0x0000 ;int19
+      000058 82 00 00 00            107 	int 0x0000 ;int20
+      00005C 82 00 00 00            108 	int 0x0000 ;int21
+      000060 82 00 00 00            109 	int 0x0000 ;int22
+      000064 82 00 00 00            110 	int 0x0000 ;int23
+      000068 82 00 00 00            111 	int 0x0000 ;int24
+      00006C 82 00 00 00            112 	int 0x0000 ;int25
+      000070 82 00 00 00            113 	int 0x0000 ;int26
+      000074 82 00 00 00            114 	int 0x0000 ;int27
+      000078 82 00 00 00            115 	int 0x0000 ;int28
+      00007C 82 00 00 00            116 	int 0x0000 ;int29
+                                    117 ;--------------------------------------------------------
+                                    118 ; global & static initialisations
+                                    119 ;--------------------------------------------------------
+                                    120 	.area HOME
+                                    121 	.area GSINIT
+                                    122 	.area GSFINAL
+                                    123 	.area GSINIT
+      000000                        124 __sdcc_gs_init_startup:
+      000000                        125 __sdcc_init_data:
+                                    126 ; stm8_genXINIT() start
+      000000 AEr00r00         [ 2]  127 	ldw x, #l_DATA
+      000003 27 07            [ 1]  128 	jreq	00002$
+      000005                        129 00001$:
+      000005 72 4FuFFuFF      [ 1]  130 	clr (s_DATA - 1, x)
+      000009 5A               [ 2]  131 	decw x
+      00000A 26 F9            [ 1]  132 	jrne	00001$
+      00000C                        133 00002$:
+      00000C AEr00r00         [ 2]  134 	ldw	x, #l_INITIALIZER
+      00000F 27 09            [ 1]  135 	jreq	00004$
+      000011                        136 00003$:
+      000011 D6uFFuFF         [ 1]  137 	ld	a, (s_INITIALIZER - 1, x)
+      000014 D7uFFuFF         [ 1]  138 	ld	(s_INITIALIZED - 1, x), a
+      000017 5A               [ 2]  139 	decw	x
+      000018 26 F7            [ 1]  140 	jrne	00003$
+      00001A                        141 00004$:
+                                    142 ; stm8_genXINIT() end
+                                    143 	.area GSFINAL
+      000000 CCr00r80         [ 2]  144 	jp	__sdcc_program_startup
+                                    145 ;--------------------------------------------------------
+                                    146 ; Home
+                                    147 ;--------------------------------------------------------
+                                    148 	.area HOME
+                                    149 	.area HOME
+      000080                        150 __sdcc_program_startup:
+      000080 CCr02rDA         [ 2]  151 	jp	_main
+                                    152 ;	return from main will return to caller
+                                    153 ;--------------------------------------------------------
+                                    154 ; code
+                                    155 ;--------------------------------------------------------
+                                    156 	.area CODE
+                                    157 ;	delay.c: 7: void delay_init()
+                                    158 ;	-----------------------------------------
+                                    159 ;	 function delay_init
+                                    160 ;	-----------------------------------------
+      000000                        161 _delay_init:
+                                    162 ;	delay.c: 9: TIM4_PSCR = 4; // CLK/16
+      000000 35 04 53 47      [ 1]  163 	mov	0x5347+0, #0x04
+      000004 81               [ 4]  164 	ret
+                                    165 ;	delay.c: 12: void delay_us(unsigned long delus)
+                                    166 ;	-----------------------------------------
+                                    167 ;	 function delay_us
+                                    168 ;	-----------------------------------------
+      000005                        169 _delay_us:
+      000005 52 06            [ 2]  170 	sub	sp, #6
+                                    171 ;	delay.c: 16: for(du=0;du<(delus/10);du++)
+      000007 4B 0A            [ 1]  172 	push	#0x0a
+      000009 5F               [ 1]  173 	clrw	x
+      00000A 89               [ 2]  174 	pushw	x
+      00000B 4B 00            [ 1]  175 	push	#0x00
+      00000D 1E 0F            [ 2]  176 	ldw	x, (0x0f, sp)
+      00000F 89               [ 2]  177 	pushw	x
+      000010 1E 0F            [ 2]  178 	ldw	x, (0x0f, sp)
+      000012 89               [ 2]  179 	pushw	x
+      000013 CDr00r00         [ 4]  180 	call	__divulong
+      000016 5B 08            [ 2]  181 	addw	sp, #8
+      000018 1F 05            [ 2]  182 	ldw	(0x05, sp), x
+      00001A 17 03            [ 2]  183 	ldw	(0x03, sp), y
+      00001C 5F               [ 1]  184 	clrw	x
+      00001D 1F 01            [ 2]  185 	ldw	(0x01, sp), x
+      00001F                        186 00103$:
+      00001F 1E 01            [ 2]  187 	ldw	x, (0x01, sp)
+      000021 90 5F            [ 1]  188 	clrw	y
+      000023 13 05            [ 2]  189 	cpw	x, (0x05, sp)
+      000025 90 9F            [ 1]  190 	ld	a, yl
+      000027 12 04            [ 1]  191 	sbc	a, (0x04, sp)
+      000029 90 9E            [ 1]  192 	ld	a, yh
+      00002B 12 03            [ 1]  193 	sbc	a, (0x03, sp)
+      00002D 24 0D            [ 1]  194 	jrnc	00101$
+                                    195 ;	delay.c: 18: delay_timer(100);
+      00002F 4B 64            [ 1]  196 	push	#0x64
+      000031 CDr00r9A         [ 4]  197 	call	_delay_timer
+      000034 84               [ 1]  198 	pop	a
+                                    199 ;	delay.c: 16: for(du=0;du<(delus/10);du++)
+      000035 1E 01            [ 2]  200 	ldw	x, (0x01, sp)
+      000037 5C               [ 2]  201 	incw	x
+      000038 1F 01            [ 2]  202 	ldw	(0x01, sp), x
+      00003A 20 E3            [ 2]  203 	jra	00103$
+      00003C                        204 00101$:
+                                    205 ;	delay.c: 20: delay_timer(delus%10);
+      00003C 4B 0A            [ 1]  206 	push	#0x0a
+      00003E 5F               [ 1]  207 	clrw	x
+      00003F 89               [ 2]  208 	pushw	x
+      000040 4B 00            [ 1]  209 	push	#0x00
+      000042 1E 0F            [ 2]  210 	ldw	x, (0x0f, sp)
+      000044 89               [ 2]  211 	pushw	x
+      000045 1E 0F            [ 2]  212 	ldw	x, (0x0f, sp)
+      000047 89               [ 2]  213 	pushw	x
+      000048 CDr00r00         [ 4]  214 	call	__modulong
+      00004B 5B 08            [ 2]  215 	addw	sp, #8
+      00004D 9F               [ 1]  216 	ld	a, xl
+      00004E 88               [ 1]  217 	push	a
+      00004F CDr00r9A         [ 4]  218 	call	_delay_timer
+      000052 5B 07            [ 2]  219 	addw	sp, #7
+      000054 81               [ 4]  220 	ret
+                                    221 ;	delay.c: 23: void delay_ms(unsigned long delms)
+                                    222 ;	-----------------------------------------
+                                    223 ;	 function delay_ms
+                                    224 ;	-----------------------------------------
+      000055                        225 _delay_ms:
+      000055 52 08            [ 2]  226 	sub	sp, #8
+                                    227 ;	delay.c: 27: for(dm=0;dm<(delms*100);dm++)
+      000057 1E 0D            [ 2]  228 	ldw	x, (0x0d, sp)
+      000059 89               [ 2]  229 	pushw	x
+      00005A 1E 0D            [ 2]  230 	ldw	x, (0x0d, sp)
+      00005C 89               [ 2]  231 	pushw	x
+      00005D 4B 64            [ 1]  232 	push	#0x64
+      00005F 5F               [ 1]  233 	clrw	x
+      000060 89               [ 2]  234 	pushw	x
+      000061 4B 00            [ 1]  235 	push	#0x00
+      000063 CDr00r00         [ 4]  236 	call	__mullong
+      000066 5B 08            [ 2]  237 	addw	sp, #8
+      000068 1F 07            [ 2]  238 	ldw	(0x07, sp), x
+      00006A 17 05            [ 2]  239 	ldw	(0x05, sp), y
+      00006C 5F               [ 1]  240 	clrw	x
+      00006D 4F               [ 1]  241 	clr	a
+      00006E 0F 01            [ 1]  242 	clr	(0x01, sp)
+      000070                        243 00103$:
+      000070 88               [ 1]  244 	push	a
+      000071 13 08            [ 2]  245 	cpw	x, (0x08, sp)
+      000073 7B 01            [ 1]  246 	ld	a, (1, sp)
+      000075 12 07            [ 1]  247 	sbc	a, (0x07, sp)
+      000077 7B 02            [ 1]  248 	ld	a, (0x02, sp)
+      000079 12 06            [ 1]  249 	sbc	a, (0x06, sp)
+      00007B 84               [ 1]  250 	pop	a
+      00007C 24 19            [ 1]  251 	jrnc	00105$
+                                    252 ;	delay.c: 29: delay_timer(100);
+      00007E 88               [ 1]  253 	push	a
+      00007F 89               [ 2]  254 	pushw	x
+      000080 4B 64            [ 1]  255 	push	#0x64
+      000082 CDr00r9A         [ 4]  256 	call	_delay_timer
+      000085 84               [ 1]  257 	pop	a
+      000086 85               [ 2]  258 	popw	x
+      000087 84               [ 1]  259 	pop	a
+                                    260 ;	delay.c: 27: for(dm=0;dm<(delms*100);dm++)
+      000088 1C 00 01         [ 2]  261 	addw	x, #0x0001
+      00008B A9 00            [ 1]  262 	adc	a, #0x00
+      00008D 88               [ 1]  263 	push	a
+      00008E 7B 02            [ 1]  264 	ld	a, (0x02, sp)
+      000090 A9 00            [ 1]  265 	adc	a, #0x00
+      000092 6B 02            [ 1]  266 	ld	(0x02, sp), a
+      000094 84               [ 1]  267 	pop	a
+      000095 20 D9            [ 2]  268 	jra	00103$
+      000097                        269 00105$:
+      000097 5B 08            [ 2]  270 	addw	sp, #8
+      000099 81               [ 4]  271 	ret
+                                    272 ;	delay.c: 33: void delay_timer(unsigned char deltim)
+                                    273 ;	-----------------------------------------
+                                    274 ;	 function delay_timer
+                                    275 ;	-----------------------------------------
+      00009A                        276 _delay_timer:
+                                    277 ;	delay.c: 35: TIM4_CR1 = (1<<TIM4_CR1_CEN);
+      00009A 35 01 53 40      [ 1]  278 	mov	0x5340+0, #0x01
+                                    279 ;	delay.c: 36: while(TIM4_CNTR<deltim);
+      00009E                        280 00101$:
+      00009E AE 53 46         [ 2]  281 	ldw	x, #0x5346
+      0000A1 F6               [ 1]  282 	ld	a, (x)
+      0000A2 11 03            [ 1]  283 	cp	a, (0x03, sp)
+      0000A4 25 F8            [ 1]  284 	jrc	00101$
+                                    285 ;	delay.c: 37: TIM4_CR1 = (0<<TIM4_CR1_CEN);
+      0000A6 35 00 53 40      [ 1]  286 	mov	0x5340+0, #0x00
+                                    287 ;	delay.c: 38: TIM4_CNTR = 0; //reset timer	
+      0000AA 35 00 53 46      [ 1]  288 	mov	0x5346+0, #0x00
+      0000AE 81               [ 4]  289 	ret
+                                    290 ;	periph_stm8s.c: 16: void clock_init()
+                                    291 ;	-----------------------------------------
+                                    292 ;	 function clock_init
+                                    293 ;	-----------------------------------------
+      0000AF                        294 _clock_init:
+                                    295 ;	periph_stm8s.c: 18: CLK_CKDIVR = 0x00; //fMASTER = fCPU = fHSI = 16MHz
+      0000AF 35 00 50 C6      [ 1]  296 	mov	0x50c6+0, #0x00
+                                    297 ;	periph_stm8s.c: 19: CLK_ICKR = (1<<CLK_ICKR_HSIEN);	//High Speed Internal RC Oscillator enabled
+      0000B3 35 01 50 C0      [ 1]  298 	mov	0x50c0+0, #0x01
+      0000B7 81               [ 4]  299 	ret
+                                    300 ;	periph_stm8s.c: 24: void i2c_init()
+                                    301 ;	-----------------------------------------
+                                    302 ;	 function i2c_init
+                                    303 ;	-----------------------------------------
+      0000B8                        304 _i2c_init:
+                                    305 ;	periph_stm8s.c: 26: I2C_CR1 = (0<<I2C_CR1_PE); //Disable I2C before configuration starts
+      0000B8 35 00 52 10      [ 1]  306 	mov	0x5210+0, #0x00
+                                    307 ;	periph_stm8s.c: 27: I2C_FREQR = 16;	//fCLK = 16 MHz
+      0000BC 35 10 52 12      [ 1]  308 	mov	0x5212+0, #0x10
+                                    309 ;	periph_stm8s.c: 28: I2C_CCRH = (0<<I2C_CCRH_FS)|(0<<I2C_CCRH_CCR11)|(0<<I2C_CCRH_CCR10)|(0<<I2C_CCRH_CCR9)|(0<<I2C_CCRH_CCR8); //Standard Mode
+      0000C0 35 00 52 1C      [ 1]  310 	mov	0x521c+0, #0x00
+                                    311 ;	periph_stm8s.c: 29: I2C_CCRL = 0x80;  //Clock Speed = 100 kHz
+      0000C4 35 80 52 1B      [ 1]  312 	mov	0x521b+0, #0x80
+                                    313 ;	periph_stm8s.c: 31: I2C_OARH = (0<<I2C_OARH_ADDMODE)|(1<<I2C_OARH_ADDCONF); //7-bit address mode, ADDCONF always must be 1
+      0000C8 35 40 52 14      [ 1]  314 	mov	0x5214+0, #0x40
+                                    315 ;	periph_stm8s.c: 32: I2C_TRISER = 17;  //Setup Bus Characteristic
+      0000CC 35 11 52 1D      [ 1]  316 	mov	0x521d+0, #0x11
+                                    317 ;	periph_stm8s.c: 37: I2C_CR1 = (1<<I2C_CR1_PE);  //Enable I2C after configuration complete
+      0000D0 35 01 52 10      [ 1]  318 	mov	0x5210+0, #0x01
+      0000D4 81               [ 4]  319 	ret
+                                    320 ;	periph_stm8s.c: 40: void i2c_set_start()
+                                    321 ;	-----------------------------------------
+                                    322 ;	 function i2c_set_start
+                                    323 ;	-----------------------------------------
+      0000D5                        324 _i2c_set_start:
+                                    325 ;	periph_stm8s.c: 42: I2C_CR2 |= (1<<I2C_CR2_START);
+      0000D5 72 10 52 11      [ 1]  326 	bset	0x5211, #0
+      0000D9 81               [ 4]  327 	ret
+                                    328 ;	periph_stm8s.c: 45: void i2c_set_address(unsigned char addr, unsigned char dir)
+                                    329 ;	-----------------------------------------
+                                    330 ;	 function i2c_set_address
+                                    331 ;	-----------------------------------------
+      0000DA                        332 _i2c_set_address:
+                                    333 ;	periph_stm8s.c: 47: if(dir==I2C_READ) I2C_DR = (addr<<1)|dir;
+      0000DA 7B 03            [ 1]  334 	ld	a, (0x03, sp)
+      0000DC 97               [ 1]  335 	ld	xl, a
+      0000DD 58               [ 2]  336 	sllw	x
+      0000DE 7B 04            [ 1]  337 	ld	a, (0x04, sp)
+      0000E0 A1 01            [ 1]  338 	cp	a, #0x01
+      0000E2 26 09            [ 1]  339 	jrne	00104$
+      0000E4 9F               [ 1]  340 	ld	a, xl
+      0000E5 1A 04            [ 1]  341 	or	a, (0x04, sp)
+      0000E7 AE 52 16         [ 2]  342 	ldw	x, #0x5216
+      0000EA F7               [ 1]  343 	ld	(x), a
+      0000EB 20 0D            [ 2]  344 	jra	00106$
+      0000ED                        345 00104$:
+                                    346 ;	periph_stm8s.c: 48: else if(dir==I2C_WRITE) I2C_DR = (addr<<1)&dir;
+      0000ED 7B 04            [ 1]  347 	ld	a, (0x04, sp)
+      0000EF A1 FE            [ 1]  348 	cp	a, #0xfe
+      0000F1 26 07            [ 1]  349 	jrne	00106$
+      0000F3 9F               [ 1]  350 	ld	a, xl
+      0000F4 14 04            [ 1]  351 	and	a, (0x04, sp)
+      0000F6 AE 52 16         [ 2]  352 	ldw	x, #0x5216
+      0000F9 F7               [ 1]  353 	ld	(x), a
+      0000FA                        354 00106$:
+      0000FA 81               [ 4]  355 	ret
+                                    356 ;	periph_stm8s.c: 52: void i2c_set_stop()
+                                    357 ;	-----------------------------------------
+                                    358 ;	 function i2c_set_stop
+                                    359 ;	-----------------------------------------
+      0000FB                        360 _i2c_set_stop:
+                                    361 ;	periph_stm8s.c: 54: I2C_CR2 |= (1<<I2C_CR2_STOP);
+      0000FB AE 52 11         [ 2]  362 	ldw	x, #0x5211
+      0000FE F6               [ 1]  363 	ld	a, (x)
+      0000FF AA 02            [ 1]  364 	or	a, #0x02
+      000101 F7               [ 1]  365 	ld	(x), a
+      000102 81               [ 4]  366 	ret
+                                    367 ;	periph_stm8s.c: 57: void i2c_clear_ack()
+                                    368 ;	-----------------------------------------
+                                    369 ;	 function i2c_clear_ack
+                                    370 ;	-----------------------------------------
+      000103                        371 _i2c_clear_ack:
+                                    372 ;	periph_stm8s.c: 59: I2C_CR2 &= ~(1<<I2C_CR2_ACK); //Disable Acknowledge
+      000103 AE 52 11         [ 2]  373 	ldw	x, #0x5211
+      000106 F6               [ 1]  374 	ld	a, (x)
+      000107 A4 FB            [ 1]  375 	and	a, #0xfb
+      000109 F7               [ 1]  376 	ld	(x), a
+      00010A 81               [ 4]  377 	ret
+                                    378 ;	periph_stm8s.c: 62: void i2c_set_ack()
+                                    379 ;	-----------------------------------------
+                                    380 ;	 function i2c_set_ack
+                                    381 ;	-----------------------------------------
+      00010B                        382 _i2c_set_ack:
+                                    383 ;	periph_stm8s.c: 64: I2C_CR2 |= (1<<I2C_CR2_ACK); //Enable Acknowledge
+      00010B AE 52 11         [ 2]  384 	ldw	x, #0x5211
+      00010E F6               [ 1]  385 	ld	a, (x)
+      00010F AA 04            [ 1]  386 	or	a, #0x04
+      000111 F7               [ 1]  387 	ld	(x), a
+      000112 81               [ 4]  388 	ret
+                                    389 ;	periph_stm8s.c: 67: void i2c_ack_pos_current()
+                                    390 ;	-----------------------------------------
+                                    391 ;	 function i2c_ack_pos_current
+                                    392 ;	-----------------------------------------
+      000113                        393 _i2c_ack_pos_current:
+                                    394 ;	periph_stm8s.c: 69: I2C_CR2 &= ~(1<<I2C_CR2_POS); //ACK bit controls the (N)ACK of the current byte being received in the shift register
+      000113 AE 52 11         [ 2]  395 	ldw	x, #0x5211
+      000116 F6               [ 1]  396 	ld	a, (x)
+      000117 A4 F7            [ 1]  397 	and	a, #0xf7
+      000119 F7               [ 1]  398 	ld	(x), a
+      00011A 81               [ 4]  399 	ret
+                                    400 ;	periph_stm8s.c: 72: void i2c_ack_pos_next()
+                                    401 ;	-----------------------------------------
+                                    402 ;	 function i2c_ack_pos_next
+                                    403 ;	-----------------------------------------
+      00011B                        404 _i2c_ack_pos_next:
+                                    405 ;	periph_stm8s.c: 74: I2C_CR2 |= (1<<I2C_CR2_POS); //ACK bit controls the (N)ACK of the next byte which will be received in the shift register
+      00011B AE 52 11         [ 2]  406 	ldw	x, #0x5211
+      00011E F6               [ 1]  407 	ld	a, (x)
+      00011F AA 08            [ 1]  408 	or	a, #0x08
+      000121 F7               [ 1]  409 	ld	(x), a
+      000122 81               [ 4]  410 	ret
+                                    411 ;	periph_stm8s.c: 77: void i2c_poll_SB()
+                                    412 ;	-----------------------------------------
+                                    413 ;	 function i2c_poll_SB
+                                    414 ;	-----------------------------------------
+      000123                        415 _i2c_poll_SB:
+                                    416 ;	periph_stm8s.c: 79: while((I2C_SR1&(1<<I2C_SR1_SB))!=(1<<I2C_SR1_SB)){}
+      000123                        417 00101$:
+      000123 AE 52 17         [ 2]  418 	ldw	x, #0x5217
+      000126 F6               [ 1]  419 	ld	a, (x)
+      000127 A4 01            [ 1]  420 	and	a, #0x01
+      000129 A1 01            [ 1]  421 	cp	a, #0x01
+      00012B 26 F6            [ 1]  422 	jrne	00101$
+      00012D 81               [ 4]  423 	ret
+                                    424 ;	periph_stm8s.c: 82: void i2c_poll_ADDR()
+                                    425 ;	-----------------------------------------
+                                    426 ;	 function i2c_poll_ADDR
+                                    427 ;	-----------------------------------------
+      00012E                        428 _i2c_poll_ADDR:
+                                    429 ;	periph_stm8s.c: 84: while((I2C_SR1&(1<<I2C_SR1_ADDR))!=(1<<I2C_SR1_ADDR)){}
+      00012E                        430 00101$:
+      00012E AE 52 17         [ 2]  431 	ldw	x, #0x5217
+      000131 F6               [ 1]  432 	ld	a, (x)
+      000132 A4 02            [ 1]  433 	and	a, #0x02
+      000134 A1 02            [ 1]  434 	cp	a, #0x02
+      000136 26 F6            [ 1]  435 	jrne	00101$
+      000138 81               [ 4]  436 	ret
+                                    437 ;	periph_stm8s.c: 87: void i2c_poll_BTF()
+                                    438 ;	-----------------------------------------
+                                    439 ;	 function i2c_poll_BTF
+                                    440 ;	-----------------------------------------
+      000139                        441 _i2c_poll_BTF:
+                                    442 ;	periph_stm8s.c: 89: while((I2C_SR1&(1<<I2C_SR1_BTF))!=(1<<I2C_SR1_BTF)){}
+      000139                        443 00101$:
+      000139 AE 52 17         [ 2]  444 	ldw	x, #0x5217
+      00013C F6               [ 1]  445 	ld	a, (x)
+      00013D A4 04            [ 1]  446 	and	a, #0x04
+      00013F A1 04            [ 1]  447 	cp	a, #0x04
+      000141 26 F6            [ 1]  448 	jrne	00101$
+      000143 81               [ 4]  449 	ret
+                                    450 ;	periph_stm8s.c: 92: void i2c_poll_TXE()
+                                    451 ;	-----------------------------------------
+                                    452 ;	 function i2c_poll_TXE
+                                    453 ;	-----------------------------------------
+      000144                        454 _i2c_poll_TXE:
+                                    455 ;	periph_stm8s.c: 94: while((I2C_SR1&(1<<I2C_SR1_TXE))!=(1<<I2C_SR1_TXE)){}
+      000144                        456 00101$:
+      000144 AE 52 17         [ 2]  457 	ldw	x, #0x5217
+      000147 F6               [ 1]  458 	ld	a, (x)
+      000148 A4 80            [ 1]  459 	and	a, #0x80
+      00014A A1 80            [ 1]  460 	cp	a, #0x80
+      00014C 26 F6            [ 1]  461 	jrne	00101$
+      00014E 81               [ 4]  462 	ret
+                                    463 ;	periph_stm8s.c: 97: void i2c_poll_RXNE()
+                                    464 ;	-----------------------------------------
+                                    465 ;	 function i2c_poll_RXNE
+                                    466 ;	-----------------------------------------
+      00014F                        467 _i2c_poll_RXNE:
+                                    468 ;	periph_stm8s.c: 99: while((I2C_SR1&(1<<I2C_SR1_RXNE))!=(1<<I2C_SR1_RXNE)){}
+      00014F                        469 00101$:
+      00014F AE 52 17         [ 2]  470 	ldw	x, #0x5217
+      000152 F6               [ 1]  471 	ld	a, (x)
+      000153 A4 40            [ 1]  472 	and	a, #0x40
+      000155 A1 40            [ 1]  473 	cp	a, #0x40
+      000157 26 F6            [ 1]  474 	jrne	00101$
+      000159 81               [ 4]  475 	ret
+                                    476 ;	periph_stm8s.c: 102: void i2c_clear_bits()
+                                    477 ;	-----------------------------------------
+                                    478 ;	 function i2c_clear_bits
+                                    479 ;	-----------------------------------------
+      00015A                        480 _i2c_clear_bits:
+                                    481 ;	periph_stm8s.c: 104: readreg = I2C_SR1;
+      00015A AE 52 17         [ 2]  482 	ldw	x, #0x5217
+      00015D F6               [ 1]  483 	ld	a, (x)
+      00015E C7u00u00         [ 1]  484 	ld	_readreg+0, a
+      000161 81               [ 4]  485 	ret
+                                    486 ;	periph_stm8s.c: 107: void i2c_clear_ADDR()
+                                    487 ;	-----------------------------------------
+                                    488 ;	 function i2c_clear_ADDR
+                                    489 ;	-----------------------------------------
+      000162                        490 _i2c_clear_ADDR:
+                                    491 ;	periph_stm8s.c: 109: readreg = I2C_SR1;
+      000162 AE 52 17         [ 2]  492 	ldw	x, #0x5217
+      000165 F6               [ 1]  493 	ld	a, (x)
+                                    494 ;	periph_stm8s.c: 110: readreg = I2C_SR3;
+      000166 AE 52 19         [ 2]  495 	ldw	x, #0x5219
+      000169 F6               [ 1]  496 	ld	a, (x)
+      00016A C7u00u00         [ 1]  497 	ld	_readreg+0, a
+      00016D 81               [ 4]  498 	ret
+                                    499 ;	periph_stm8s.c: 113: void i2c_enable_interrupts()
+                                    500 ;	-----------------------------------------
+                                    501 ;	 function i2c_enable_interrupts
+                                    502 ;	-----------------------------------------
+      00016E                        503 _i2c_enable_interrupts:
+                                    504 ;	periph_stm8s.c: 115: I2C_ITR = 0x07;
+      00016E 35 07 52 1A      [ 1]  505 	mov	0x521a+0, #0x07
+      000172 81               [ 4]  506 	ret
+                                    507 ;	periph_stm8s.c: 117: void i2c_disable_interrupts()
+                                    508 ;	-----------------------------------------
+                                    509 ;	 function i2c_disable_interrupts
+                                    510 ;	-----------------------------------------
+      000173                        511 _i2c_disable_interrupts:
+                                    512 ;	periph_stm8s.c: 119: I2C_ITR = 0x00;
+      000173 35 00 52 1A      [ 1]  513 	mov	0x521a+0, #0x00
+      000177 81               [ 4]  514 	ret
+                                    515 ;	periph_stm8s.c: 124: void adc_init()
+                                    516 ;	-----------------------------------------
+                                    517 ;	 function adc_init
+                                    518 ;	-----------------------------------------
+      000178                        519 _adc_init:
+                                    520 ;	periph_stm8s.c: 126: ADC1_CR1 = fADC_fMASTER_8<<ADC1_CR1_SPSEL; // ADCCLK = MCLK/8
+      000178 35 40 54 01      [ 1]  521 	mov	0x5401+0, #0x40
+                                    522 ;	periph_stm8s.c: 127: ADC1_CR2 = (1<<ADC1_CR2_ALIGN);  // right alignment adc data
+      00017C 35 08 54 02      [ 1]  523 	mov	0x5402+0, #0x08
+                                    524 ;	periph_stm8s.c: 129: ADC1_CR1 |= (1<<ADC1_CR1_ADON);  // turn on ADC
+      000180 72 10 54 01      [ 1]  525 	bset	0x5401, #0
+      000184 81               [ 4]  526 	ret
+                                    527 ;	periph_stm8s.c: 133: unsigned int read_adc(unsigned char adcch)
+                                    528 ;	-----------------------------------------
+                                    529 ;	 function read_adc
+                                    530 ;	-----------------------------------------
+      000185                        531 _read_adc:
+      000185 52 04            [ 2]  532 	sub	sp, #4
+                                    533 ;	periph_stm8s.c: 137: ADC1_CSR &= 0xF0;  // select
+      000187 AE 54 00         [ 2]  534 	ldw	x, #0x5400
+      00018A F6               [ 1]  535 	ld	a, (x)
+      00018B A4 F0            [ 1]  536 	and	a, #0xf0
+      00018D F7               [ 1]  537 	ld	(x), a
+                                    538 ;	periph_stm8s.c: 138: ADC1_CSR |= adcch; // channel
+      00018E AE 54 00         [ 2]  539 	ldw	x, #0x5400
+      000191 F6               [ 1]  540 	ld	a, (x)
+      000192 1A 07            [ 1]  541 	or	a, (0x07, sp)
+      000194 AE 54 00         [ 2]  542 	ldw	x, #0x5400
+      000197 F7               [ 1]  543 	ld	(x), a
+                                    544 ;	periph_stm8s.c: 141: ADC1_CR1 |= (1<<ADC1_CR1_ADON); // start conversion
+      000198 72 10 54 01      [ 1]  545 	bset	0x5401, #0
+                                    546 ;	periph_stm8s.c: 142: while(!((ADC1_CSR)&(1<<ADC1_CSR_EOC)));; // conversion is in progress
+      00019C                        547 00101$:
+      00019C AE 54 00         [ 2]  548 	ldw	x, #0x5400
+      00019F F6               [ 1]  549 	ld	a, (x)
+      0001A0 4D               [ 1]  550 	tnz	a
+      0001A1 2A F9            [ 1]  551 	jrpl	00101$
+                                    552 ;	periph_stm8s.c: 143: adcval = (ADC1_DRH<<8) + ADC1_DRL;
+      0001A3 AE 54 04         [ 2]  553 	ldw	x, #0x5404
+      0001A6 F6               [ 1]  554 	ld	a, (x)
+      0001A7 0F 03            [ 1]  555 	clr	(0x03, sp)
+      0001A9 6B 01            [ 1]  556 	ld	(0x01, sp), a
+      0001AB 0F 02            [ 1]  557 	clr	(0x02, sp)
+      0001AD AE 54 05         [ 2]  558 	ldw	x, #0x5405
+      0001B0 F6               [ 1]  559 	ld	a, (x)
+      0001B1 5F               [ 1]  560 	clrw	x
+      0001B2 97               [ 1]  561 	ld	xl, a
+      0001B3 72 FB 01         [ 2]  562 	addw	x, (0x01, sp)
+                                    563 ;	periph_stm8s.c: 144: ADC1_CSR |= (0<<ADC1_CSR_EOC); // reset EOC
+      0001B6 90 AE 54 00      [ 2]  564 	ldw	y, #0x5400
+      0001BA 90 F6            [ 1]  565 	ld	a, (y)
+      0001BC 90 AE 54 00      [ 2]  566 	ldw	y, #0x5400
+      0001C0 90 F7            [ 1]  567 	ld	(y), a
+                                    568 ;	periph_stm8s.c: 146: return adcval;
+      0001C2 5B 04            [ 2]  569 	addw	sp, #4
+      0001C4 81               [ 4]  570 	ret
+                                    571 ;	periph_stm8s.c: 151: void uart1_init(unsigned char rxien) //UART Initialization
+                                    572 ;	-----------------------------------------
+                                    573 ;	 function uart1_init
+                                    574 ;	-----------------------------------------
+      0001C5                        575 _uart1_init:
+                                    576 ;	periph_stm8s.c: 155: UART1_BRR1 = 0x68;
+      0001C5 35 68 52 32      [ 1]  577 	mov	0x5232+0, #0x68
+                                    578 ;	periph_stm8s.c: 156: UART1_BRR2 = 0x03;
+      0001C9 35 03 52 33      [ 1]  579 	mov	0x5233+0, #0x03
+                                    580 ;	periph_stm8s.c: 158: UART1_CR1 |= (0<<UART1_CR1_M)|(0<<UART1_CR1_PCEN); //8 bit Data; No Parity
+      0001CD AE 52 34         [ 2]  581 	ldw	x, #0x5234
+      0001D0 F6               [ 1]  582 	ld	a, (x)
+      0001D1 AE 52 34         [ 2]  583 	ldw	x, #0x5234
+      0001D4 F7               [ 1]  584 	ld	(x), a
+                                    585 ;	periph_stm8s.c: 159: UART1_CR3 |= (0<<UART1_CR3_STOP); //Stop Bit = 1
+      0001D5 AE 52 36         [ 2]  586 	ldw	x, #0x5236
+      0001D8 F6               [ 1]  587 	ld	a, (x)
+      0001D9 AE 52 36         [ 2]  588 	ldw	x, #0x5236
+      0001DC F7               [ 1]  589 	ld	(x), a
+                                    590 ;	periph_stm8s.c: 161: if(rxien==1) 
+      0001DD 7B 03            [ 1]  591 	ld	a, (0x03, sp)
+      0001DF A1 01            [ 1]  592 	cp	a, #0x01
+      0001E1 26 0B            [ 1]  593 	jrne	00102$
+                                    594 ;	periph_stm8s.c: 163: UART1_CR2 |= (1<<UART1_CR2_RIEN); //Enable Interrupt on Receiver Mode
+      0001E3 AE 52 35         [ 2]  595 	ldw	x, #0x5235
+      0001E6 F6               [ 1]  596 	ld	a, (x)
+      0001E7 AA 20            [ 1]  597 	or	a, #0x20
+      0001E9 F7               [ 1]  598 	ld	(x), a
+                                    599 ;	periph_stm8s.c: 164: ITC_SPR5 = (level_2<<ITC_SPR5_VECT18); //UART Interrupt Setting
+      0001EA 35 00 7F 74      [ 1]  600 	mov	0x7f74+0, #0x00
+      0001EE                        601 00102$:
+                                    602 ;	periph_stm8s.c: 167: UART1_CR2 |= (1<<UART1_CR2_TEN); //Enable Transmitter Mode
+      0001EE AE 52 35         [ 2]  603 	ldw	x, #0x5235
+      0001F1 F6               [ 1]  604 	ld	a, (x)
+      0001F2 AA 08            [ 1]  605 	or	a, #0x08
+      0001F4 F7               [ 1]  606 	ld	(x), a
+                                    607 ;	periph_stm8s.c: 168: UART1_CR2 |= (1<<UART1_CR2_REN); //Enable Receiver Mode
+      0001F5 AE 52 35         [ 2]  608 	ldw	x, #0x5235
+      0001F8 F6               [ 1]  609 	ld	a, (x)
+      0001F9 AA 04            [ 1]  610 	or	a, #0x04
+      0001FB F7               [ 1]  611 	ld	(x), a
+      0001FC 81               [ 4]  612 	ret
+                                    613 ;	periph_stm8s.c: 171: void uart1_send(unsigned char usend) //UART Transmit a Byte
+                                    614 ;	-----------------------------------------
+                                    615 ;	 function uart1_send
+                                    616 ;	-----------------------------------------
+      0001FD                        617 _uart1_send:
+                                    618 ;	periph_stm8s.c: 173: UART1_DR = usend; //Write to UART Data Register
+      0001FD AE 52 31         [ 2]  619 	ldw	x, #0x5231
+      000200 7B 03            [ 1]  620 	ld	a, (0x03, sp)
+      000202 F7               [ 1]  621 	ld	(x), a
+                                    622 ;	periph_stm8s.c: 174: while((UART1_SR&(1<<UART1_SR_TXE))!=(1<<UART1_SR_TXE)); //Wait until Transmission complete
+      000203                        623 00101$:
+      000203 AE 52 30         [ 2]  624 	ldw	x, #0x5230
+      000206 F6               [ 1]  625 	ld	a, (x)
+      000207 A4 80            [ 1]  626 	and	a, #0x80
+      000209 A1 80            [ 1]  627 	cp	a, #0x80
+      00020B 26 F6            [ 1]  628 	jrne	00101$
+      00020D 81               [ 4]  629 	ret
+                                    630 ;	periph_stm8s.c: 177: unsigned char uart1_recv() //UART Receive a Byte (using Polling)
+                                    631 ;	-----------------------------------------
+                                    632 ;	 function uart1_recv
+                                    633 ;	-----------------------------------------
+      00020E                        634 _uart1_recv:
+                                    635 ;	periph_stm8s.c: 180: if((UART1_SR&(1<<UART1_SR_RXNE))==(1<<UART1_SR_RXNE)) //Check if any data in Data Register
+      00020E AE 52 30         [ 2]  636 	ldw	x, #0x5230
+      000211 F6               [ 1]  637 	ld	a, (x)
+      000212 A4 20            [ 1]  638 	and	a, #0x20
+      000214 A1 20            [ 1]  639 	cp	a, #0x20
+      000216 26 05            [ 1]  640 	jrne	00102$
+                                    641 ;	periph_stm8s.c: 182: urecv = UART1_DR; //Read Data Register (RXNE cleared automatically)
+      000218 AE 52 31         [ 2]  642 	ldw	x, #0x5231
+      00021B F6               [ 1]  643 	ld	a, (x)
+                                    644 ;	periph_stm8s.c: 184: else urecv=0;
+      00021C 21                     645 	.byte 0x21
+      00021D                        646 00102$:
+      00021D 4F               [ 1]  647 	clr	a
+      00021E                        648 00103$:
+                                    649 ;	periph_stm8s.c: 185: return urecv;
+      00021E 81               [ 4]  650 	ret
+                                    651 ;	periph_stm8s.c: 188: unsigned char uart1_recv_i() //UART Receive a Byte (using Interrupt)
+                                    652 ;	-----------------------------------------
+                                    653 ;	 function uart1_recv_i
+                                    654 ;	-----------------------------------------
+      00021F                        655 _uart1_recv_i:
+                                    656 ;	periph_stm8s.c: 191: urecv = UART1_DR; //Read Data Register (RXNE cleared automatically)
+      00021F AE 52 31         [ 2]  657 	ldw	x, #0x5231
+      000222 F6               [ 1]  658 	ld	a, (x)
+                                    659 ;	periph_stm8s.c: 192: return urecv;
+      000223 81               [ 4]  660 	ret
+                                    661 ;	periph_stm8s.c: 198: void pwm1_init(unsigned int timval)
+                                    662 ;	-----------------------------------------
+                                    663 ;	 function pwm1_init
+                                    664 ;	-----------------------------------------
+      000224                        665 _pwm1_init:
+      000224 52 02            [ 2]  666 	sub	sp, #2
+                                    667 ;	periph_stm8s.c: 200: TIM1_PSCRH = 0x00; //TIM_CLK = CLK
+      000226 35 00 52 60      [ 1]  668 	mov	0x5260+0, #0x00
+                                    669 ;	periph_stm8s.c: 201: TIM1_PSCRL = 0x00; //TIM_CLK = CLK
+      00022A 35 00 52 61      [ 1]  670 	mov	0x5261+0, #0x00
+                                    671 ;	periph_stm8s.c: 202: TIM1_ARRH = (timval >> 8); //TIM RELOAD
+      00022E 7B 05            [ 1]  672 	ld	a, (0x05, sp)
+      000230 0F 01            [ 1]  673 	clr	(0x01, sp)
+      000232 AE 52 62         [ 2]  674 	ldw	x, #0x5262
+      000235 F7               [ 1]  675 	ld	(x), a
+                                    676 ;	periph_stm8s.c: 203: TIM1_ARRL = (timval & 0x00FF); //TIM RELOAD
+      000236 7B 06            [ 1]  677 	ld	a, (0x06, sp)
+      000238 95               [ 1]  678 	ld	xh, a
+      000239 4F               [ 1]  679 	clr	a
+      00023A 9E               [ 1]  680 	ld	a, xh
+      00023B AE 52 63         [ 2]  681 	ldw	x, #0x5263
+      00023E F7               [ 1]  682 	ld	(x), a
+                                    683 ;	periph_stm8s.c: 204: pwm1ch1_enable();
+      00023F CDr02r9A         [ 4]  684 	call	_pwm1ch1_enable
+                                    685 ;	periph_stm8s.c: 205: TIM1_CCER1 |= (0<<TIM1_CCER1_CC1P); //Output active high
+      000242 AE 52 5C         [ 2]  686 	ldw	x, #0x525c
+      000245 F6               [ 1]  687 	ld	a, (x)
+      000246 AE 52 5C         [ 2]  688 	ldw	x, #0x525c
+      000249 F7               [ 1]  689 	ld	(x), a
+                                    690 ;	periph_stm8s.c: 206: TIM1_CCMR1 = (TIM1_OCxREF_PWM_mode1<<TIM1_CCMR1_OC1M); //PWM MODE 1 for Channel 1
+      00024A 35 60 52 58      [ 1]  691 	mov	0x5258+0, #0x60
+                                    692 ;	periph_stm8s.c: 207: pwm1_update(0x0000); //Start Value
+      00024E 5F               [ 1]  693 	clrw	x
+      00024F 89               [ 2]  694 	pushw	x
+      000250 CDr02rAE         [ 4]  695 	call	_pwm1_update
+      000253 5B 02            [ 2]  696 	addw	sp, #2
+                                    697 ;	periph_stm8s.c: 208: TIM1_BKR = (1<<TIM1_BKR_MOE); //ENABLE MAIN OUTPUT 
+      000255 35 80 52 6D      [ 1]  698 	mov	0x526d+0, #0x80
+                                    699 ;	periph_stm8s.c: 209: TIM1_CR1 |= (1<<TIM1_CR1_CEN); //ENABLE TIM
+      000259 AE 52 50         [ 2]  700 	ldw	x, #0x5250
+      00025C F6               [ 1]  701 	ld	a, (x)
+      00025D AA 01            [ 1]  702 	or	a, #0x01
+      00025F F7               [ 1]  703 	ld	(x), a
+      000260 5B 02            [ 2]  704 	addw	sp, #2
+      000262 81               [ 4]  705 	ret
+                                    706 ;	periph_stm8s.c: 212: void pwm2_init(unsigned int timval)
+                                    707 ;	-----------------------------------------
+                                    708 ;	 function pwm2_init
+                                    709 ;	-----------------------------------------
+      000263                        710 _pwm2_init:
+      000263 52 02            [ 2]  711 	sub	sp, #2
+                                    712 ;	periph_stm8s.c: 214: TIM2_PSCR = 0x00; //TIM_CLK = CLK
+      000265 35 00 53 0E      [ 1]  713 	mov	0x530e+0, #0x00
+                                    714 ;	periph_stm8s.c: 215: TIM2_ARRH = (timval >> 8); //TIM RELOAD
+      000269 7B 05            [ 1]  715 	ld	a, (0x05, sp)
+      00026B 0F 01            [ 1]  716 	clr	(0x01, sp)
+      00026D AE 53 0F         [ 2]  717 	ldw	x, #0x530f
+      000270 F7               [ 1]  718 	ld	(x), a
+                                    719 ;	periph_stm8s.c: 216: TIM2_ARRL = (timval & 0x00FF); //TIM RELOAD
+      000271 7B 06            [ 1]  720 	ld	a, (0x06, sp)
+      000273 95               [ 1]  721 	ld	xh, a
+      000274 4F               [ 1]  722 	clr	a
+      000275 9E               [ 1]  723 	ld	a, xh
+      000276 AE 53 10         [ 2]  724 	ldw	x, #0x5310
+      000279 F7               [ 1]  725 	ld	(x), a
+                                    726 ;	periph_stm8s.c: 217: pwm2ch1_enable();
+      00027A CDr02rA4         [ 4]  727 	call	_pwm2ch1_enable
+                                    728 ;	periph_stm8s.c: 218: TIM2_CCER1 |= (0<<TIM2_CCER1_CC1P); //Output active high
+      00027D AE 53 0A         [ 2]  729 	ldw	x, #0x530a
+      000280 F6               [ 1]  730 	ld	a, (x)
+      000281 AE 53 0A         [ 2]  731 	ldw	x, #0x530a
+      000284 F7               [ 1]  732 	ld	(x), a
+                                    733 ;	periph_stm8s.c: 219: TIM2_CCMR1 = (TIM2_OCxREF_PWM_mode1<<TIM2_CCMR1_OC1M); //PWM MODE 1 for Channel 1 
+      000285 35 60 53 07      [ 1]  734 	mov	0x5307+0, #0x60
+                                    735 ;	periph_stm8s.c: 220: pwm2_update(0x0000); //Start Value
+      000289 5F               [ 1]  736 	clrw	x
+      00028A 89               [ 2]  737 	pushw	x
+      00028B CDr02rC4         [ 4]  738 	call	_pwm2_update
+      00028E 5B 02            [ 2]  739 	addw	sp, #2
+                                    740 ;	periph_stm8s.c: 221: TIM2_CR1 |= (1<<TIM2_CR1_CEN); //ENABLE TIM
+      000290 AE 53 00         [ 2]  741 	ldw	x, #0x5300
+      000293 F6               [ 1]  742 	ld	a, (x)
+      000294 AA 01            [ 1]  743 	or	a, #0x01
+      000296 F7               [ 1]  744 	ld	(x), a
+      000297 5B 02            [ 2]  745 	addw	sp, #2
+      000299 81               [ 4]  746 	ret
+                                    747 ;	periph_stm8s.c: 224: void pwm1ch1_enable()
+                                    748 ;	-----------------------------------------
+                                    749 ;	 function pwm1ch1_enable
+                                    750 ;	-----------------------------------------
+      00029A                        751 _pwm1ch1_enable:
+                                    752 ;	periph_stm8s.c: 226: TIM1_CCER1 |= (1<<TIM1_CCER1_CC1E);
+      00029A 72 10 52 5C      [ 1]  753 	bset	0x525c, #0
+      00029E 81               [ 4]  754 	ret
+                                    755 ;	periph_stm8s.c: 229: void pwm1ch1_disable()
+                                    756 ;	-----------------------------------------
+                                    757 ;	 function pwm1ch1_disable
+                                    758 ;	-----------------------------------------
+      00029F                        759 _pwm1ch1_disable:
+                                    760 ;	periph_stm8s.c: 231: TIM1_CCER1 &= ~(1<<TIM1_CCER1_CC1E);
+      00029F 72 11 52 5C      [ 1]  761 	bres	0x525c, #0
+      0002A3 81               [ 4]  762 	ret
+                                    763 ;	periph_stm8s.c: 234: void pwm2ch1_enable()
+                                    764 ;	-----------------------------------------
+                                    765 ;	 function pwm2ch1_enable
+                                    766 ;	-----------------------------------------
+      0002A4                        767 _pwm2ch1_enable:
+                                    768 ;	periph_stm8s.c: 236: TIM2_CCER1 |= (1<<TIM2_CCER1_CC1E);
+      0002A4 72 10 53 0A      [ 1]  769 	bset	0x530a, #0
+      0002A8 81               [ 4]  770 	ret
+                                    771 ;	periph_stm8s.c: 239: void pwm2ch1_disable()
+                                    772 ;	-----------------------------------------
+                                    773 ;	 function pwm2ch1_disable
+                                    774 ;	-----------------------------------------
+      0002A9                        775 _pwm2ch1_disable:
+                                    776 ;	periph_stm8s.c: 241: TIM2_CCER1 &= ~(1<<TIM2_CCER1_CC1E);
+      0002A9 72 11 53 0A      [ 1]  777 	bres	0x530a, #0
+      0002AD 81               [ 4]  778 	ret
+                                    779 ;	periph_stm8s.c: 244: void pwm1_update(unsigned int pwmval)
+                                    780 ;	-----------------------------------------
+                                    781 ;	 function pwm1_update
+                                    782 ;	-----------------------------------------
+      0002AE                        783 _pwm1_update:
+      0002AE 52 02            [ 2]  784 	sub	sp, #2
+                                    785 ;	periph_stm8s.c: 246: TIM1_CCR1L = (pwmval & 0x00FF);
+      0002B0 7B 06            [ 1]  786 	ld	a, (0x06, sp)
+      0002B2 95               [ 1]  787 	ld	xh, a
+      0002B3 4F               [ 1]  788 	clr	a
+      0002B4 9E               [ 1]  789 	ld	a, xh
+      0002B5 AE 52 66         [ 2]  790 	ldw	x, #0x5266
+      0002B8 F7               [ 1]  791 	ld	(x), a
+                                    792 ;	periph_stm8s.c: 247: TIM1_CCR1H = (pwmval >> 8);
+      0002B9 7B 05            [ 1]  793 	ld	a, (0x05, sp)
+      0002BB 0F 01            [ 1]  794 	clr	(0x01, sp)
+      0002BD AE 52 65         [ 2]  795 	ldw	x, #0x5265
+      0002C0 F7               [ 1]  796 	ld	(x), a
+      0002C1 5B 02            [ 2]  797 	addw	sp, #2
+      0002C3 81               [ 4]  798 	ret
+                                    799 ;	periph_stm8s.c: 250: void pwm2_update(unsigned int pwmval)
+                                    800 ;	-----------------------------------------
+                                    801 ;	 function pwm2_update
+                                    802 ;	-----------------------------------------
+      0002C4                        803 _pwm2_update:
+      0002C4 52 02            [ 2]  804 	sub	sp, #2
+                                    805 ;	periph_stm8s.c: 252: TIM2_CCR1L = (pwmval & 0x00FF);
+      0002C6 7B 06            [ 1]  806 	ld	a, (0x06, sp)
+      0002C8 95               [ 1]  807 	ld	xh, a
+      0002C9 4F               [ 1]  808 	clr	a
+      0002CA 9E               [ 1]  809 	ld	a, xh
+      0002CB AE 53 12         [ 2]  810 	ldw	x, #0x5312
+      0002CE F7               [ 1]  811 	ld	(x), a
+                                    812 ;	periph_stm8s.c: 253: TIM2_CCR1H = (pwmval >> 8);
+      0002CF 7B 05            [ 1]  813 	ld	a, (0x05, sp)
+      0002D1 0F 01            [ 1]  814 	clr	(0x01, sp)
+      0002D3 AE 53 11         [ 2]  815 	ldw	x, #0x5311
+      0002D6 F7               [ 1]  816 	ld	(x), a
+      0002D7 5B 02            [ 2]  817 	addw	sp, #2
+      0002D9 81               [ 4]  818 	ret
+                                    819 ;	main.c: 40: int main()
+                                    820 ;	-----------------------------------------
+                                    821 ;	 function main
+                                    822 ;	-----------------------------------------
+      0002DA                        823 _main:
+                                    824 ;	main.c: 42: clock_init();
+      0002DA CDr00rAF         [ 4]  825 	call	_clock_init
+                                    826 ;	main.c: 43: delay_init();
+      0002DD CDr00r00         [ 4]  827 	call	_delay_init
+                                    828 ;	main.c: 44: gpio_init();
+      0002E0 CDr03r59         [ 4]  829 	call	_gpio_init
+                                    830 ;	main.c: 46: loop();
+      0002E3 CDr02rE8         [ 4]  831 	call	_loop
+                                    832 ;	main.c: 47: return 0;
+      0002E6 5F               [ 1]  833 	clrw	x
+      0002E7 81               [ 4]  834 	ret
+                                    835 ;	main.c: 53: void loop()
+                                    836 ;	-----------------------------------------
+                                    837 ;	 function loop
+                                    838 ;	-----------------------------------------
+      0002E8                        839 _loop:
+      0002E8 52 05            [ 2]  840 	sub	sp, #5
+                                    841 ;	main.c: 57: while(1)
+      0002EA                        842 00110$:
+                                    843 ;	main.c: 59: if((BTNIDR|BTNCW_MASKL)==BTNCW_MASKL) //If CW Button is pressed (Active Low)
+      0002EA AE 50 01         [ 2]  844 	ldw	x, #0x5001
+      0002ED F6               [ 1]  845 	ld	a, (x)
+      0002EE AA FD            [ 1]  846 	or	a, #0xfd
+      0002F0 A1 FD            [ 1]  847 	cp	a, #0xfd
+      0002F2 26 29            [ 1]  848 	jrne	00107$
+                                    849 ;	main.c: 61: for(sti=0;sti<4;sti++)
+      0002F4 AEr00r00         [ 2]  850 	ldw	x, #_stepcw+0
+      0002F7 1F 02            [ 2]  851 	ldw	(0x02, sp), x
+      0002F9 0F 01            [ 1]  852 	clr	(0x01, sp)
+      0002FB                        853 00112$:
+                                    854 ;	main.c: 63: setstep(stepcw[sti]); //Run CW sequence
+      0002FB 5F               [ 1]  855 	clrw	x
+      0002FC 7B 01            [ 1]  856 	ld	a, (0x01, sp)
+      0002FE 97               [ 1]  857 	ld	xl, a
+      0002FF 72 FB 02         [ 2]  858 	addw	x, (0x02, sp)
+      000302 F6               [ 1]  859 	ld	a, (x)
+      000303 88               [ 1]  860 	push	a
+      000304 CDr03r87         [ 4]  861 	call	_setstep
+      000307 84               [ 1]  862 	pop	a
+                                    863 ;	main.c: 64: delay_ms(10);
+      000308 4B 0A            [ 1]  864 	push	#0x0a
+      00030A 5F               [ 1]  865 	clrw	x
+      00030B 89               [ 2]  866 	pushw	x
+      00030C 4B 00            [ 1]  867 	push	#0x00
+      00030E CDr00r55         [ 4]  868 	call	_delay_ms
+      000311 5B 04            [ 2]  869 	addw	sp, #4
+                                    870 ;	main.c: 61: for(sti=0;sti<4;sti++)
+      000313 0C 01            [ 1]  871 	inc	(0x01, sp)
+      000315 7B 01            [ 1]  872 	ld	a, (0x01, sp)
+      000317 A1 04            [ 1]  873 	cp	a, #0x04
+      000319 25 E0            [ 1]  874 	jrc	00112$
+      00031B 20 CD            [ 2]  875 	jra	00110$
+      00031D                        876 00107$:
+                                    877 ;	main.c: 67: else if((BTNIDR|BTNCCW_MASKL)==BTNCCW_MASKL) //If CCW Button is pressed (Active Low)
+      00031D AE 50 01         [ 2]  878 	ldw	x, #0x5001
+      000320 F6               [ 1]  879 	ld	a, (x)
+      000321 AA FB            [ 1]  880 	or	a, #0xfb
+      000323 A1 FB            [ 1]  881 	cp	a, #0xfb
+      000325 26 29            [ 1]  882 	jrne	00104$
+                                    883 ;	main.c: 69: for(sti=0;sti<4;sti++)
+      000327 AEr00r04         [ 2]  884 	ldw	x, #_stepccw+0
+      00032A 1F 04            [ 2]  885 	ldw	(0x04, sp), x
+      00032C 0F 01            [ 1]  886 	clr	(0x01, sp)
+      00032E                        887 00114$:
+                                    888 ;	main.c: 71: setstep(stepccw[sti]); //Run CCW sequence
+      00032E 5F               [ 1]  889 	clrw	x
+      00032F 7B 01            [ 1]  890 	ld	a, (0x01, sp)
+      000331 97               [ 1]  891 	ld	xl, a
+      000332 72 FB 04         [ 2]  892 	addw	x, (0x04, sp)
+      000335 F6               [ 1]  893 	ld	a, (x)
+      000336 88               [ 1]  894 	push	a
+      000337 CDr03r87         [ 4]  895 	call	_setstep
+      00033A 84               [ 1]  896 	pop	a
+                                    897 ;	main.c: 72: delay_ms(10);
+      00033B 4B 0A            [ 1]  898 	push	#0x0a
+      00033D 5F               [ 1]  899 	clrw	x
+      00033E 89               [ 2]  900 	pushw	x
+      00033F 4B 00            [ 1]  901 	push	#0x00
+      000341 CDr00r55         [ 4]  902 	call	_delay_ms
+      000344 5B 04            [ 2]  903 	addw	sp, #4
+                                    904 ;	main.c: 69: for(sti=0;sti<4;sti++)
+      000346 0C 01            [ 1]  905 	inc	(0x01, sp)
+      000348 7B 01            [ 1]  906 	ld	a, (0x01, sp)
+      00034A A1 04            [ 1]  907 	cp	a, #0x04
+      00034C 25 E0            [ 1]  908 	jrc	00114$
+      00034E 20 9A            [ 2]  909 	jra	00110$
+      000350                        910 00104$:
+                                    911 ;	main.c: 77: MOTODR = 0x00;
+      000350 35 00 50 0A      [ 1]  912 	mov	0x500a+0, #0x00
+      000354 20 94            [ 2]  913 	jra	00110$
+      000356 5B 05            [ 2]  914 	addw	sp, #5
+      000358 81               [ 4]  915 	ret
+                                    916 ;	main.c: 83: void gpio_init()
+                                    917 ;	-----------------------------------------
+                                    918 ;	 function gpio_init
+                                    919 ;	-----------------------------------------
+      000359                        920 _gpio_init:
+                                    921 ;	main.c: 85: MOTDDR |= (OUTPUT<<MOTP1)|(OUTPUT<<MOTP2)|(OUTPUT<<MOTP3)|(OUTPUT<<MOTP4);
+      000359 AE 50 0C         [ 2]  922 	ldw	x, #0x500c
+      00035C F6               [ 1]  923 	ld	a, (x)
+      00035D AA 78            [ 1]  924 	or	a, #0x78
+      00035F F7               [ 1]  925 	ld	(x), a
+                                    926 ;	main.c: 86: MOTCR1 |= (pushpull<<MOTP1)|(pushpull<<MOTP2)|(pushpull<<MOTP3)|(pushpull<<MOTP4);
+      000360 AE 50 0D         [ 2]  927 	ldw	x, #0x500d
+      000363 F6               [ 1]  928 	ld	a, (x)
+      000364 AA 78            [ 1]  929 	or	a, #0x78
+      000366 F7               [ 1]  930 	ld	(x), a
+                                    931 ;	main.c: 87: MOTCR2 |= (speed_2MHz<<MOTP1)|(speed_2MHz<<MOTP2)|(speed_2MHz<<MOTP3)|(speed_2MHz<<MOTP4);
+      000367 AE 50 0E         [ 2]  932 	ldw	x, #0x500e
+      00036A F6               [ 1]  933 	ld	a, (x)
+      00036B AE 50 0E         [ 2]  934 	ldw	x, #0x500e
+      00036E F7               [ 1]  935 	ld	(x), a
+                                    936 ;	main.c: 89: BTNDDR |= (INPUT<<BTNCW)|(INPUT<<BTNCCW);
+      00036F AE 50 02         [ 2]  937 	ldw	x, #0x5002
+      000372 F6               [ 1]  938 	ld	a, (x)
+      000373 AE 50 02         [ 2]  939 	ldw	x, #0x5002
+      000376 F7               [ 1]  940 	ld	(x), a
+                                    941 ;	main.c: 90: BTNCR1 |= (pullup<<BTNCW)|(pullup<<BTNCCW); //Use internal pull-up
+      000377 AE 50 03         [ 2]  942 	ldw	x, #0x5003
+      00037A F6               [ 1]  943 	ld	a, (x)
+      00037B AA 06            [ 1]  944 	or	a, #0x06
+      00037D F7               [ 1]  945 	ld	(x), a
+                                    946 ;	main.c: 91: BTNCR2 |= (exti_disabled<<BTNCW)|(exti_disabled<<BTNCCW);
+      00037E AE 50 04         [ 2]  947 	ldw	x, #0x5004
+      000381 F6               [ 1]  948 	ld	a, (x)
+      000382 AE 50 04         [ 2]  949 	ldw	x, #0x5004
+      000385 F7               [ 1]  950 	ld	(x), a
+      000386 81               [ 4]  951 	ret
+                                    952 ;	main.c: 94: void setstep(unsigned char st)
+                                    953 ;	-----------------------------------------
+                                    954 ;	 function setstep
+                                    955 ;	-----------------------------------------
+      000387                        956 _setstep:
+                                    957 ;	main.c: 96: MOTODR = st<<MOTP1; //Update step
+      000387 7B 03            [ 1]  958 	ld	a, (0x03, sp)
+      000389 48               [ 1]  959 	sll	a
+      00038A 48               [ 1]  960 	sll	a
+      00038B 48               [ 1]  961 	sll	a
+      00038C AE 50 0A         [ 2]  962 	ldw	x, #0x500a
+      00038F F7               [ 1]  963 	ld	(x), a
+      000390 81               [ 4]  964 	ret
+                                    965 	.area CODE
+                                    966 	.area INITIALIZER
+      000000                        967 __xinit__stepcw:
+      000000 0A                     968 	.db #0x0A	; 10
+      000001 09                     969 	.db #0x09	; 9
+      000002 05                     970 	.db #0x05	; 5
+      000003 06                     971 	.db #0x06	; 6
+      000004                        972 __xinit__stepccw:
+      000004 05                     973 	.db #0x05	; 5
+      000005 09                     974 	.db #0x09	; 9
+      000006 0A                     975 	.db #0x0A	; 10
+      000007 06                     976 	.db #0x06	; 6
+                                    977 	.area CABS (ABS)

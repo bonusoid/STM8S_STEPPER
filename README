@@ -1,0 +1,14 @@
+1. make
+   To compile program using SDCC
+   Make sure to install SDCC first
+   use : make
+
+2. flash
+   To flash .hex file to MCU
+   Using ST-LINK V2 Dongle
+   Make sure to install stm8flash first
+   use : ./flash
+
+3. clearfiles
+   To clear compiled files
+   use : ./clearfiles
