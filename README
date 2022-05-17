@@ -12,3 +12,7 @@
 3. clearfiles
    To clear compiled files
    use : ./clearfiles
+   
+4. Note for MCU
+   This Project use STM8S003F3P6/STM8S103F3P6.
+   Other type/part number may have a slightly different configuration/setting.
